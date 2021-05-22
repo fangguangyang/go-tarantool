@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/tarantool/go-tarantool"
-	msgpack "gopkg.in/vmihailenco/msgpack.v2"
+	"github.com/fangguangyang/go-tarantool"
+	msgpack "github.com/vmihailenco/msgpack/v5"
 )
 
 // Queue is a handle to tarantool queue's tube

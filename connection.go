@@ -13,7 +13,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"gopkg.in/vmihailenco/msgpack.v2"
+	"github.com/vmihailenco/msgpack/v5"
 )
 
 const requestsMap = 128

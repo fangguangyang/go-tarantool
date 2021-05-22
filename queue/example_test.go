@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/tarantool/go-tarantool"
-	"github.com/tarantool/go-tarantool/queue"
+	"github.com/fangguangyang/go-tarantool"
+	"github.com/fangguangyang/go-tarantool/queue"
 )
 
 func ExampleConnection_Queue() {

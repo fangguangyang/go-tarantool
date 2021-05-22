@@ -3,7 +3,7 @@ package queue
 import (
 	"fmt"
 
-	msgpack "gopkg.in/vmihailenco/msgpack.v2"
+	msgpack "github.com/vmihailenco/msgpack/v5"
 )
 
 // Task represents a task from tarantool queue's tube

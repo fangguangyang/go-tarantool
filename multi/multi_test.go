@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tarantool/go-tarantool"
+	"github.com/fangguangyang/go-tarantool"
 )
 
 var server1 = "127.0.0.1:3013"

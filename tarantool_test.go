@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	. "github.com/tarantool/go-tarantool"
-	"gopkg.in/vmihailenco/msgpack.v2"
+	. "github.com/fangguangyang/go-tarantool"
+	"github.com/vmihailenco/msgpack/v5"
 )
 
 type Member struct {
