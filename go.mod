@@ -1,6 +1,6 @@
 module github.com/fangguangyang/go-tarantool
 
-go 1.11
+go 1.16
 
 require (
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
