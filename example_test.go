@@ -89,7 +89,7 @@ func Example() {
 	spaceNo := uint32(512)
 	indexNo := uint32(0)
 
-	server := "127.0.0.1:3013"
+	server := "127.0.0.1:2003"
 	opts := tarantool.Opts{
 		Timeout:       50 * time.Millisecond,
 		Reconnect:     100 * time.Millisecond,
