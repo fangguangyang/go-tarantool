@@ -286,7 +286,6 @@ func Connect(addr string, opts Opts) (conn *Connection, err error) {
 			err = nil
 		}
 	}
-
 	go conn.pinger()
 	if conn.opts.Timeout > 0 {
 		go conn.timeouts()

@@ -72,15 +72,15 @@ func (conn *Connection) loadSchema() (err error) {
 	for _, row := range resp.Data {
 		row := row.([]interface{})
 		space := new(Space)
-		space.Id = uint32(row[0].(uint64))
+		space.Id = uint32(row[0].(uint16))
 		space.Name = row[2].(string)
 		space.Engine = row[3].(string)
-		space.FieldsCount = uint32(row[4].(uint64))
+		space.FieldsCount = uint32(row[4].(int8))
 		if len(row) >= 6 {
 			switch row5 := row[5].(type) {
 			case string:
 				space.Temporary = row5 == "temporary"
-			case map[interface{}]interface{}:
+			case map[string]interface{}:
 				if temp, ok := row5["temporary"]; ok {
 					space.Temporary = temp.(bool)
 				}
@@ -97,7 +97,7 @@ func (conn *Connection) loadSchema() (err error) {
 				if f == nil {
 					continue
 				}
-				f := f.(map[interface{}]interface{})
+				f := f.(map[string]interface{})
 				field := new(Field)
 				field.Id = uint32(i)
 				if name, ok := f["name"]; ok && name != nil {
@@ -125,14 +125,14 @@ func (conn *Connection) loadSchema() (err error) {
 	for _, row := range resp.Data {
 		row := row.([]interface{})
 		index := new(Index)
-		index.Id = uint32(row[1].(uint64))
+		index.Id = uint32(row[1].(int8))
 		index.Name = row[2].(string)
 		index.Type = row[3].(string)
 		switch row[4].(type) {
 		case uint64:
 			index.Unique = row[4].(uint64) > 0
-		case map[interface{}]interface{}:
-			opts := row[4].(map[interface{}]interface{})
+		case map[string]interface{}:
+			opts := row[4].(map[string]interface{})
 			var ok bool
 			if index.Unique, ok = opts["unique"].(bool); !ok {
 				/* see bug https://github.com/tarantool/tarantool/issues/2060 */
@@ -155,7 +155,7 @@ func (conn *Connection) loadSchema() (err error) {
 				field := new(IndexField)
 				switch f := f.(type) {
 				case []interface{}:
-					field.Id = uint32(f[0].(uint64))
+					field.Id = uint32(f[0].(int8))
 					field.Type = f[1].(string)
 				case map[interface{}]interface{}:
 					field.Id = uint32(f["field"].(uint64))
@@ -166,7 +166,7 @@ func (conn *Connection) loadSchema() (err error) {
 		default:
 			panic("unexpected schema format (index fields)")
 		}
-		spaceId := uint32(row[0].(uint64))
+		spaceId := uint32(row[0].(uint16))
 		schema.SpacesById[spaceId].IndexesById[index.Id] = index
 		schema.SpacesById[spaceId].Indexes[index.Name] = index
 	}

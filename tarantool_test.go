@@ -24,7 +24,7 @@ type Tuple2 struct {
 }
 
 func (m *Member) EncodeMsgpack(e *msgpack.Encoder) error {
-	e.EncodeBytesLen(2)
+	e.EncodeArrayLen(2)
 	e.EncodeString(m.Name)
 	e.EncodeUint(uint64(m.Val))
 	return nil
@@ -33,7 +33,7 @@ func (m *Member) EncodeMsgpack(e *msgpack.Encoder) error {
 func (m *Member) DecodeMsgpack(d *msgpack.Decoder) error {
 	var err error
 	var l int
-	if l, err = d.DecodeBytesLen(); err != nil {
+	if l, err = d.DecodeArrayLen(); err != nil {
 		return err
 	}
 	if l != 2 {
@@ -49,7 +49,7 @@ func (m *Member) DecodeMsgpack(d *msgpack.Decoder) error {
 }
 
 func (c *Tuple2) EncodeMsgpack(e *msgpack.Encoder) error {
-	e.EncodeBytesLen(3)
+	e.EncodeArrayLen(3)
 	e.EncodeUint(uint64(c.Cid))
 	e.EncodeString(c.Orig)
 	e.Encode(c.Members)
@@ -59,7 +59,7 @@ func (c *Tuple2) EncodeMsgpack(e *msgpack.Encoder) error {
 func (c *Tuple2) DecodeMsgpack(d *msgpack.Decoder) error {
 	var err error
 	var l int
-	if l, err = d.DecodeBytesLen(); err != nil {
+	if l, err = d.DecodeArrayLen(); err != nil {
 		return err
 	}
 	if l != 3 {
@@ -71,7 +71,7 @@ func (c *Tuple2) DecodeMsgpack(d *msgpack.Decoder) error {
 	if c.Orig, err = d.DecodeString(); err != nil {
 		return err
 	}
-	if l, err = d.DecodeBytesLen(); err != nil {
+	if l, err = d.DecodeArrayLen(); err != nil {
 		return err
 	}
 	c.Members = make([]Member, l)
@@ -81,7 +81,7 @@ func (c *Tuple2) DecodeMsgpack(d *msgpack.Decoder) error {
 	return nil
 }
 
-var server = "127.0.0.1:2003"
+var server = "127.0.0.1:2104"
 var spaceNo = uint32(512)
 var spaceName = "test"
 var indexNo = uint32(0)
@@ -426,7 +426,7 @@ func TestClient(t *testing.T) {
 		if len(tpl) != 3 {
 			t.Errorf("Unexpected body of Insert (tuple len)")
 		}
-		if id, ok := tpl[0].(uint64); !ok || id != 1 {
+		if id, ok := tpl[0].(int8); !ok || id != 1 {
 			t.Errorf("Unexpected body of Insert (0)")
 		}
 		if h, ok := tpl[1].(string); !ok || h != "hello" {
@@ -459,7 +459,7 @@ func TestClient(t *testing.T) {
 		if len(tpl) != 3 {
 			t.Errorf("Unexpected body of Delete (tuple len)")
 		}
-		if id, ok := tpl[0].(uint64); !ok || id != 1 {
+		if id, ok := tpl[0].(int8); !ok || id != 1 {
 			t.Errorf("Unexpected body of Delete (0)")
 		}
 		if h, ok := tpl[1].(string); !ok || h != "hello" {
@@ -501,7 +501,7 @@ func TestClient(t *testing.T) {
 		if len(tpl) != 3 {
 			t.Errorf("Unexpected body of Replace (tuple len)")
 		}
-		if id, ok := tpl[0].(uint64); !ok || id != 2 {
+		if id, ok := tpl[0].(int8); !ok || id != 2 {
 			t.Errorf("Unexpected body of Replace (0)")
 		}
 		if h, ok := tpl[1].(string); !ok || h != "hi" {
