@@ -720,6 +720,7 @@ func (conn *Connection) putFuture(fut *Future, body func(*msgpack.Encoder) error
 	if shard.buf.Cap() == 0 {
 		shard.buf.b = make([]byte, 0, 128)
 		shard.enc = msgpack.NewEncoder(&shard.buf)
+		shard.enc.SetOmitEmpty(true)
 	}
 	blen := shard.buf.Len()
 	if err := fut.pack(&shard.buf, shard.enc, body); err != nil {
