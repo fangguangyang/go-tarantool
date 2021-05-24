@@ -105,7 +105,7 @@ func (resp *Response) decodeBody() (err error) {
 }
 
 func (resp *Response) decodeBodyTyped(res interface{}) (err error) {
-	if resp.buf.Len() > 0 {
+	if resp.buf.Len() > 8 {
 		var l int
 		d := msgpack.NewDecoder(&resp.buf)
 		if l, err = d.DecodeMapLen(); err != nil {

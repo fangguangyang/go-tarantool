@@ -408,7 +408,13 @@ func TestClient(t *testing.T) {
 	if resp == nil {
 		t.Errorf("Response is nil after Ping")
 	}
-
+	// var product []Test
+	// err = conn.CallTyped("box.space.test:select", []interface{}{1}, &product)
+	// if err != nil {
+	// 	t.Errorf("Failed to select by PRODUCTKEY: %s", err.Error())
+	// }
+	// log.Println(product[0].ID)
+	// return
 	// Insert
 	resp, err = conn.Insert(spaceNo, []interface{}{uint(1), "hello", "world"})
 	if err != nil {
